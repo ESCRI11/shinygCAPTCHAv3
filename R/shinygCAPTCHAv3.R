@@ -57,12 +57,12 @@ tagList(tags$head(
 
 GreCAPTCHAv3Server <- function(secretKey, reCaptchaResponse) {
 
-  gResponse <- POST("https://www.google.com/recaptcha/api/siteverify", body = list(
+  gResponse <- httr::POST("https://www.google.com/recaptcha/api/siteverify", body = list(
     secret = secretKey,
     response = reCaptchaResponse
   ))
 
   if(gResponse$status_code==200){
-    return(fromJSON(content(gResponse, "text")))
+    return(jsonlite::fromJSON(httr::content(gResponse, "text")))
   }
 }
